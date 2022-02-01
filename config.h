@@ -113,11 +113,11 @@ static void (*bartabmonfns[])(Monitor *) = { NULL /* , customlayoutfn */ };
 #endif // MONOCLE_LAYOUT
 #endif // BAR_TABGROUPS_PATCH
 #if BAR_PANGO_PATCH
-static const char font[]                 = "FiraCode Nerd Font 10";
+static const char font[]                 = "DaddyTimeMono Nerd Font 9";
 #else
-static const char *fonts[]               = { "FiraCode Nerd Font:size=10" };
+static const char *fonts[]               = { "DaddyTimeMono Nerd Font:size=9" };
 #endif // BAR_PANGO_PATCH
-static const char dmenufont[]            = "FiraCode Nerd Font:size=10";
+static const char dmenufont[]            = "DaddyTimeMono Nerd Font:size=9";
 
 static char c000000[]                    = "#000000"; // placeholder value
 
@@ -428,7 +428,11 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
+	RULE(.class = "Thunderbird", .tags = 2)
+	RULE(.class = "Calendar", .isfloating = 1)
 	RULE(.class = "Todoist", .tags = 1)
+	RULE(.class = "MEGAsync", .isfloating = 1)
+	RULE(.title = "1 Reminder", .isfloating = 1)
 	#if SCRATCHPADS_PATCH
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 	#endif // SCRATCHPADS_PATCH
@@ -800,7 +804,7 @@ static const char *dmenucmd[] = {
 	NULL
 };
 static const char *termcmd[]  = { "st", NULL };
-static const char *browser[] = { "brave", NULL };
+static const char *browser[] = { "brave-browser-dev", NULL };
 #if BAR_STATUSCMD_PATCH
 #if BAR_DWMBLOCKS_PATCH
 /* This defines the name of the executable that handles the bar (used for signalling purposes) */
@@ -835,10 +839,11 @@ static Key keys[] = {
 	{ MODKEY,			XK_w,           spawn,                  {.v = browser }},
 	{ MODKEY,			XK_minus,       spawn,			SHCMD("pamixer --allow-boost -d 5") },
 	{ MODKEY,			XK_equal,	spawn,			SHCMD("pamixer --allow-boost -i 5") },
-        { MODKEY,                       XK_Delete,      spawn,                  SHCMD("sh ~/.config/scripts/dmen-power.sh") },
+        { MODKEY,                       XK_Delete,      spawn,                  SHCMD("sh ~/.config/scripts/power.sh") },
         { MODKEY,                       XK_e,           spawn,                  SHCMD("thunar")},
 	{ 0,				XK_Print,	spawn,			SHCMD("maim ~/Pictures/screenshots/screenshot-full-$(date '+%y%m%d-%H%M-%S').png") },
 	{ ShiftMask,			XK_Print,	spawn,			SHCMD("sh ~/.config/scripts/maimpick.sh") },
+	{ MODKEY,			XK_n,		spawn,			SHCMD("notflix") },
         #if RIODRAW_PATCH
 	{ MODKEY|ControlMask,           XK_p,          riospawnsync,           {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_Return,     riospawn,               {.v = termcmd } },
@@ -886,7 +891,7 @@ exec xterm -geometry 80x66+0+0 -name login
 	{ MODKEY|ControlMask,           XK_k,          pushup,                 {0} },
 	#endif // PUSH_PATCH / PUSH_NO_MASTER_PATCH
 	{ MODKEY,                       XK_i,          incnmaster,             {.i = +1 } },
-//	{ MODKEY,                       XK_d,          incnmaster,             {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_i,          incnmaster,             {.i = -1 } },
 	#if FLEXTILE_DELUXE_LAYOUT
 	{ MODKEY|ControlMask,           XK_i,          incnstack,              {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_u,          incnstack,              {.i = -1 } },
